@@ -1,4 +1,3 @@
-
 <head>
   <title>Todo App</title>
   <%= csrf_meta_tags %>
@@ -6,43 +5,48 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-  <!-- เชื่อมไฟล์ todos.css -->
-  <%= stylesheet_link_tag 'todo', media: 'all' %>
+  <%= stylesheet_link_tag 'todo', media: 'all' %> <!-- เชื่อมไฟล์ todos.css -->
 </head>
-<h1 class="title">TODOS</h1>
 
+<body>
+  <h1 class="title">TODOS</h1>
 
-<!-- ฟอร์มเพิ่ม Task ใหม่ -->
-<div class="task-form">
-  <%= form_with model: @task, local: true do |f| %>
-    <div class="form-group">
-      <%= f.label :name, "Name", class: "task-label" %>
-      <%= f.text_field :name, class: "task-input" %>
-      <%= f.submit "Create Todo", class: "create-btn" %>
-    </div>
-  <% end %>
-</div>
+  <!-- ฟอร์มเพิ่ม Task ใหม่ -->
+  <div class="task-form">
+    <%= form_with model: @task, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :name, "Name", class: "task-label" %>
+        <%= f.text_field :name, class: "task-input" %>
+        <%= f.submit "Create Todo", class: "create-btn" %>
+      </div>
+    <% end %>
+  </div>
 
-<!-- แสดง Task ในหมวด Incomplete -->
-<h2>Incomplete Tasks</h2>
-<ul>
-  <% @incomplete_tasks.each do |task| %>
-    <li class="task-item">
-      <span><%= task.name %></span> <!-- เพิ่ม <span> ตรงนี้ -->
-      <%= button_to "Complete", complete_task_path(task), method: :patch, class: "btn btn-complete" %>
-      <%= button_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-delete" %>
-    </li>
-  <% end %>
-</ul>
+  <!-- แสดง Task ในหมวด Incomplete -->
+  <div class="task-section">
+    <h2 class="section-title">Incomplete Tasks</h2>
+    <ul class="task-list">
+      <% @incomplete_tasks.each do |task| %>
+        <li class="task-item">
+          <span><%= task.name %></span>
+          <div class="task-buttons">
+            <%= button_to "Complete", complete_task_path(task), method: :patch, class: "btn btn-complete" %>
+            <%= button_to "Delete", task_path(task), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-delete" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
-
-<!-- แสดง Task ในหมวด Complete -->
-<h2 class="section-title">Complete Tasks</h2>
-<ul class="task-list">
-  <% @complete_tasks.each do |task| %>
-    <li class="task-item">
-      <%= task.name %>
-    </li>
-  <% end %>
-</ul>
+  <!-- แสดง Task ในหมวด Complete -->
+  <div class="task-section">
+    <h2 class="section-title">Complete Tasks</h2>
+    <ul class="task-list">
+      <% @complete_tasks.each do |task| %>
+        <li class="task-item">
+          <%= task.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</body>
